@@ -16,6 +16,7 @@ public class OrderService {
     public List<Order> findAll(){
         return orderRepository.findAll();
     }
+
     public Order findById(Long id){
         Optional<Order> obj = orderRepository.findById(id);
         return obj.get();
