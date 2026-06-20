@@ -1,8 +1,10 @@
 package com.learningproject.xablaux.configuration;
 
+import com.learningproject.xablaux.entities.Category;
 import com.learningproject.xablaux.entities.Order;
 import com.learningproject.xablaux.entities.User;
 import com.learningproject.xablaux.entities.enums.OrderStatus;
+import com.learningproject.xablaux.repositories.CategoryRepository;
 import com.learningproject.xablaux.repositories.OrderRepository;
 import com.learningproject.xablaux.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ConfigTest implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User(null,"Zé ruela","ruela@gmail.com","98888888","123456");
@@ -34,6 +39,12 @@ public class ConfigTest implements CommandLineRunner {
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"),OrderStatus.WAITING_PAYMENT, u1);
 
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
     }
 
 }
