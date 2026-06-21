@@ -1,14 +1,8 @@
 package com.learningproject.xablaux.configuration;
 
-import com.learningproject.xablaux.entities.Category;
-import com.learningproject.xablaux.entities.Order;
-import com.learningproject.xablaux.entities.Product;
-import com.learningproject.xablaux.entities.User;
+import com.learningproject.xablaux.entities.*;
 import com.learningproject.xablaux.entities.enums.OrderStatus;
-import com.learningproject.xablaux.repositories.CategoryRepository;
-import com.learningproject.xablaux.repositories.OrderRepository;
-import com.learningproject.xablaux.repositories.ProductRepository;
-import com.learningproject.xablaux.repositories.UserRepository;
+import com.learningproject.xablaux.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +25,9 @@ public class ConfigTest implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -67,6 +64,13 @@ public class ConfigTest implements CommandLineRunner {
         p5.getCategories().add(cat2);
 
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
     }
 
 }
