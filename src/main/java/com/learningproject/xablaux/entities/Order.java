@@ -1,7 +1,6 @@
 package com.learningproject.xablaux.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learningproject.xablaux.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
@@ -85,6 +84,13 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems(){
         return items;
+    }
+    public Double getTotal(){
+        Double sum = 0.0;
+        for(OrderItem i: items){
+            sum += i.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
