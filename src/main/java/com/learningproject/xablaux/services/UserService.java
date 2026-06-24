@@ -2,6 +2,7 @@ package com.learningproject.xablaux.services;
 
 import com.learningproject.xablaux.entities.User;
 import com.learningproject.xablaux.repositories.UserRepository;
+import com.learningproject.xablaux.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class UserService {
     }
     public User findById(Long id){
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new EntityNotFoundException(id));
     }
     public User insert(User obj){
         return userRepository.save(obj);
