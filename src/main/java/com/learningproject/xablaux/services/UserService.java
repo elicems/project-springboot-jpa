@@ -4,6 +4,7 @@ import com.learningproject.xablaux.entities.User;
 import com.learningproject.xablaux.repositories.UserRepository;
 import com.learningproject.xablaux.services.exceptions.DatabaseException;
 import com.learningproject.xablaux.services.exceptions.EntityNotFoundException;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,9 +38,13 @@ public class UserService {
         }
     }
     public User update(Long id,User obj){
-        User entity = userRepository.getReferenceById(id);
-        updateData(entity,obj);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return userRepository.save(entity);
+        }catch (jakarta.persistence.EntityNotFoundException e){
+            throw new EntityNotFoundException(id);
+        }
     }
     public void updateData(User entity,User obj){
         entity.setName(obj.getName());
